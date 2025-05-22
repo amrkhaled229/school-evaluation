@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to get the current user’s role
+    function getRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function isSupervisor() {
+      return request.auth != null && getRole() == 'supervisor';
+    }
+    function isTeacher() {
+      return request.auth != null && getRole() == 'teacher';
+    }
+
+    // users collection: supervisors can create/update any user doc,
+    // each user can read their own, and supervisors can also read
+    match /users/{uid} {
+      allow create: if isSupervisor();
+      allow update: if isSupervisor();
+      allow read:   if request.auth != null
+                     && (request.auth.uid == uid || isSupervisor());
+      allow delete: if false;
+    }
+
+    // teachers collection
+    match /teachers/{tid} {
+      allow create: if isSupervisor();
+      allow read:   if isSupervisor()
+                     || (isTeacher() && resource.data.uid == request.auth.uid);
+      allow update, delete: if isSupervisor();
+    }
+
+    // evaluations collection
+    match /evaluations/{eid} {
+      allow create: if isSupervisor();
+      allow read:   if isSupervisor()
+                     || (isTeacher() && resource.data.teacherId == request.auth.uid);
+      allow update, delete: if isSupervisor();
+    }
+
+    // reports collection (if you have one)
+    match /reports/{rid} {
+      allow create, update, delete: if isSupervisor();
+      allow read:                    if isSupervisor()
+                                     || (isTeacher() && resource.data.teacherId == request.auth.uid);
+    }
+
+    // settings
+    match /settings/{doc=**} {
+      allow read, write: if isSupervisor();
+    }
+  }
+}

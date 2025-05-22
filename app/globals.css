@@ -1,0 +1,86 @@
+/* app/globals.css -------------------------------------------------------- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- light mode = white UI, navy text / accents ---------- */
+@layer base {
+  :root {
+    /* core palette  –  tweak only these two if you ever want to change again */
+    --clr-brand-h: 234;      /* #383c64  ≈ 234.5° */
+    --clr-brand-s: 28%;      /* 28 % saturation  */
+    --clr-brand-l: 31%;      /* 31 % lightness   */
+
+    --background: 0 0% 100%;                          /* #ffffff           */
+    --foreground: var(--clr-brand-h) var(--clr-brand-s) var(--clr-brand-l);
+
+    /* everything else derives from the two colours above */
+    --card:        0 0% 100%;
+    --card-foreground: var(--foreground);
+
+    --popover:             0 0% 100%;
+    --popover-foreground:  var(--foreground);
+
+    --primary:             var(--clr-brand-h) var(--clr-brand-s) var(--clr-brand-l);
+    --primary-foreground:  0 0% 100%;
+
+    --secondary:           var(--clr-brand-h) 12% 92%;   /* very light tint  */
+    --secondary-foreground: var(--foreground);
+
+    --muted:               var(--secondary);
+    --muted-foreground:    var(--clr-brand-h) 10% 55%;
+
+    --accent:              var(--secondary);
+    --accent-foreground:   var(--foreground);
+
+    --destructive:         0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: var(--clr-brand-h) 12% 88%;
+    --input:  var(--border);
+    --ring:   var(--primary);
+
+    --radius: 0.5rem;
+  }
+
+  /* ---------- dark mode = navy UI, white text ---------- */
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+/* ---------- basic element reset ---------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
