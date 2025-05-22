@@ -33,3 +33,4 @@ firebase-errors.log
 .pnpm-debug.log
 .idea/
 .DS_Store
+scripts/*.json

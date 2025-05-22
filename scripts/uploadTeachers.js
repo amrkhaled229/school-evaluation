@@ -13,7 +13,7 @@ const serviceAccount = JSON.parse(
   readFileSync(
     path.resolve(
       __dirname,
-      "rowaad-evaluation-firebase-adminsdk-fbsvc-bbc25039c3.json"
+      "school-evaluation-8481d-firebase-adminsdk-fbsvc-2fc50bb5c1.json"
     ),
     "utf8"
   )
